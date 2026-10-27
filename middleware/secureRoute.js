@@ -4,12 +4,7 @@ const User = require("../models/user.model");
 
 const secureRoute = async (req, res, next) => {
     try {
-        const authorization = req.headers.authorization;
-        const token = req.cookies.jwt || (
-            authorization && authorization.startsWith("Bearer ")
-                ? authorization.slice(7)
-                : null
-        );
+        const token = req.cookies.jwt;
         if (!token) {
             return res.status(400).json({ error: "No token, authorization denied" });
         }
@@ -25,7 +20,7 @@ const secureRoute = async (req, res, next) => {
         next();
     } catch (error) {
         console.log(error)
-        res.status(401).json({ error: "Invalid token" });
+        res.status(500).json({ error: "Internal Server Error" });
     }
 }
 

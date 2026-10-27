@@ -3,7 +3,6 @@ import { useAuth } from "./AuthProvider";
 import io from "socket.io-client";
 
 const socketContext = createContext();
-const socketUrl = import.meta.env.VITE_SOCKET_URL || "https://chatify-7mge.onrender.com";
 
 export const useSocketContext = () => {
     return useContext(socketContext);
@@ -16,7 +15,7 @@ export const SocketProvider = ({ children }) => {
 
     useEffect(() => {
         if (authUser) {
-            const socket = io(socketUrl, {
+            const socket = io("https://a-chat-amith.onrender.com", {
                 query: {
                     userId: authUser.user._id,
                 }

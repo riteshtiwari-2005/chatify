@@ -7,13 +7,8 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
-        origin: [
-            "https://frontend-chatify-three.vercel.app",
-            "https://a-chat-amith.onrender.com",
-            "http://localhost:3001",
-        ],
+        origin: "https://a-chat-amith.onrender.com",
         methods: ["GET", "POST"],
-        credentials: true,
     }
 });
 

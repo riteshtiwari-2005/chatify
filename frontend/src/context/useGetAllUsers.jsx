@@ -1,32 +1,29 @@
 import React, { useEffect, useState } from 'react'
-import api from '../axios';
-
+import Cookies from "js-cookie";
+import axios from "axios";
 const useGetAllUsers = () => {
+
     const [allUsers, setAllUsers] = useState([]);
     const [loading, setLoading] = useState(false);
-
     useEffect(() => {
         const getUsers = async () => {
             setLoading(true);
             try {
-                const response = await api.get("/api/user/allusers",
-                    {
-                        headers: {
-                            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-                        },
+                const token = Cookies.get("jwt");
+                const response = await axios.get("/api/user/allusers", {
+                    credentials: "include",
+                    header: {
+                        Authorization: `Bearer ${token}`
                     }
-                );
+                })
                 setAllUsers(response.data);
+                setLoading(false);
             } catch (error) {
                 console.log(error);
-            } finally {
-                setLoading(false);
             }
         }
-
         getUsers();
     }, [])
-
     return [allUsers, loading]
 }
 

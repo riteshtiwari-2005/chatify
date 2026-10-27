@@ -10,23 +10,9 @@ const { app, server } = require("./SocketIO/server");
 dotenv.config();
 const PORT = process.env.PORT || 5000;
 const uri = process.env.MONGODB_URL;
-const allowedOrigins = new Set([
-    "https://frontend-chatify-three.vercel.app",
-    "https://a-chat-amith.onrender.com",
-    "http://localhost:3001",
-]);
 
 app.use(express.json());
-app.use(cors({
-    origin: (origin, callback) => {
-        if (!origin || allowedOrigins.has(origin)) {
-            callback(null, true);
-            return;
-        }
-        callback(new Error("Origin is not allowed by CORS"));
-    },
-    credentials: true,
-}));
+app.use(cors());
 app.use(cookieParser())
 
 
