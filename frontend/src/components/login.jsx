@@ -1,5 +1,5 @@
-import React from 'react'
-import { FaKey } from 'react-icons/fa'
+import React, { useState } from 'react'
+import { FaEye, FaEyeSlash, FaKey } from 'react-icons/fa'
 import { IoMdMail } from 'react-icons/io'
 import { Link } from 'react-router-dom'
 import { useForm } from "react-hook-form"
@@ -8,9 +8,8 @@ import { useAuth } from '../context/AuthProvider'
 import toast from "react-hot-toast";
 
 const Login = () => {
-
-
-    const [authUser, setAuthUser] = useAuth();
+    const [, setAuthUser] = useAuth();
+    const [showPassword, setShowPassword] = useState(false);
 
     const {
         register,
@@ -53,12 +52,15 @@ const Login = () => {
                     <div className="space-y-4">
                         <label className="flex items-center gap-2">
                             <IoMdMail className="absolute ml-3 text-lg" />
-                            <input {...register("email", { required: true })} type="email" className="w-full border px-9 py-3 rounded-lg" placeholder="Email" />
+                            <input {...register("email", { required: true })} type="email" className="w-full border px-9 py-3 rounded-lg text-black" placeholder="Email" />
                         </label>
                         {errors.email && <span className="text-red-500 text-[12px] font-semibold">*Email is required</span>}
-                        <label className="flex items-center gap-2">
+                        <label className="relative flex items-center gap-2">
                             <FaKey className="absolute ml-3 text-sm" />
-                            <input {...register("password", { required: true })} type="password" className="w-full border px-9 py-3 rounded-lg" placeholder="Password" />
+                            <input {...register("password", { required: true })} type={showPassword ? "text" : "password"} className="w-full border py-3 pl-9 pr-11 rounded-lg text-black" placeholder="Password" />
+                            <button type="button" onClick={() => setShowPassword((visible) => !visible)} className="absolute right-3 text-gray-600" aria-label={showPassword ? "Hide password" : "Show password"}>
+                                {showPassword ? <FaEyeSlash /> : <FaEye />}
+                            </button>
                         </label>
                         {errors.password && <span className="text-red-500 text-[12px] font-semibold">*Password is required</span>}
                     </div>

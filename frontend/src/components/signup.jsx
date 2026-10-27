@@ -1,5 +1,5 @@
-import React from 'react'
-import { FaUser } from "react-icons/fa";
+import React, { useState } from 'react'
+import { FaEye, FaEyeSlash, FaUser } from "react-icons/fa";
 import { IoMdMail } from "react-icons/io";
 import { FaKey } from "react-icons/fa";
 import { Link } from 'react-router-dom';
@@ -9,9 +9,9 @@ import toast from "react-hot-toast";
 import api from '../axios';
 
 const Signup = () => {
-
-
-    const [authUser, setAuthUser] = useAuth();
+    const [, setAuthUser] = useAuth();
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const {
         register,
@@ -64,22 +64,28 @@ const Signup = () => {
                     <div className="space-y-4">
                         <label className="flex items-center gap-2">
                             <FaUser className="absolute ml-3" />
-                            <input {...register("fullname", { required: true })} type="text" className="w-full border px-9 py-3 rounded-lg" placeholder="Username" />
+                            <input {...register("fullname", { required: true })} type="text" className="w-full border px-9 py-3 rounded-lg text-black" placeholder="Username" />
                         </label>
                         {errors.fullname && <span className="text-red-500 text-[12px] font-semibold">*Name is required</span>}
                         <label className="flex items-center gap-2">
                             <IoMdMail className="absolute ml-3 text-lg" />
-                            <input {...register("email", { required: true })} type="email" className="w-full border px-9 py-3 rounded-lg" placeholder="Email" />
+                            <input {...register("email", { required: true })} type="email" className="w-full border px-9 py-3 rounded-lg text-black" placeholder="Email" />
                         </label>
                         {errors.email && <span className="text-red-500 text-[12px] font-semibold">*Email is required</span>}
-                        <label className="flex items-center gap-2">
+                        <label className="relative flex items-center gap-2">
                             <FaKey className="absolute ml-3 text-sm" />
-                            <input {...register("password", { required: true })} type="password" className="w-full border px-9 py-3 rounded-lg" placeholder="Password" />
+                            <input {...register("password", { required: true })} type={showPassword ? "text" : "password"} className="w-full border py-3 pl-9 pr-11 rounded-lg text-black" placeholder="Password" />
+                            <button type="button" onClick={() => setShowPassword((visible) => !visible)} className="absolute right-3 text-gray-600" aria-label={showPassword ? "Hide password" : "Show password"}>
+                                {showPassword ? <FaEyeSlash /> : <FaEye />}
+                            </button>
                         </label>
                         {errors.password && <span className="text-red-500 text-[12px] font-semibold">*Password is required</span>}
-                        <label className="flex items-center gap-2">
+                        <label className="relative flex items-center gap-2">
                             <FaKey className="absolute ml-3 text-sm" />
-                            <input {...register("confirmPassword", { required: true, validate: validatePasswordMatch })} type="password" className="w-full border px-9 py-3 rounded-lg" placeholder="Confirm Password" />
+                            <input {...register("confirmPassword", { required: true, validate: validatePasswordMatch })} type={showConfirmPassword ? "text" : "password"} className="w-full border py-3 pl-9 pr-11 rounded-lg text-black" placeholder="Confirm Password" />
+                            <button type="button" onClick={() => setShowConfirmPassword((visible) => !visible)} className="absolute right-3 text-gray-600" aria-label={showConfirmPassword ? "Hide confirm password" : "Show confirm password"}>
+                                {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                            </button>
                         </label>
                         {errors.confirmPassword && <span className="text-red-500 text-[12px] font-semibold">{errors.confirmPassword.message}</span>}
                     </div>
