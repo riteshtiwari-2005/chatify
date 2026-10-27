@@ -42,6 +42,9 @@ const Signup = () => {
             if (response.data) {
                 reset();
                 toast.success("Signup Successful");
+                if (response.data.token) {
+                    localStorage.setItem("authToken", response.data.token);
+                }
                 localStorage.setItem("ChatApp", JSON.stringify(response.data));
                 setAuthUser(response.data);
             }

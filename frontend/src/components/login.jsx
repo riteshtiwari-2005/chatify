@@ -29,6 +29,9 @@ const Login = () => {
             if (response.data) {
                 reset();
                 toast.success("Login Successful");
+                if (response.data.token) {
+                    localStorage.setItem("authToken", response.data.token);
+                }
                 localStorage.setItem("ChatApp", JSON.stringify(response.data));
                 setAuthUser(response.data);
             }

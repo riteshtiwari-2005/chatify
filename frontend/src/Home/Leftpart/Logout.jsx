@@ -13,6 +13,7 @@ const Logout = () => {
         try {
             const response = await api.post("/api/user/logout");
             localStorage.removeItem("ChatApp");
+            localStorage.removeItem("authToken");
             Cookies.remove("jwt");
             setLoading(false);
             toast.success("Logout successfull!!");

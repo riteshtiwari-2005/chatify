@@ -26,9 +26,10 @@ const signup = async (req, res) => {
         await newUser.save();
         if (newUser) {
 
-            createTokenAndSaveCookie(newUser._id, res);
+            const token = createTokenAndSaveCookie(newUser._id, res);
             res.status(201).json({
                 message: "User Created Successfully",
+                token,
                 user: {
                     _id: newUser._id,
                     fullname: newUser.fullname,
@@ -56,14 +57,16 @@ const login = async (req, res) => {
         if (!isMatch) {
             return res.status(400).json({ error: "Invalid Email or Password" });
         }
-        createTokenAndSaveCookie(user._id, res);
+        const token = createTokenAndSaveCookie(user._id, res);
         res.status(200).json({
             message: "Login Successful",
+            token,
             user: {
                 _id: user._id,
                 fullname: user.fullname,
                 email: user.email,
-            }
+            },
+            token,
         });
     } catch (error) {
         console.log(error);
@@ -74,7 +77,12 @@ const login = async (req, res) => {
 
 const logout = async (req, res) => {
     try {
-        res.clearCookie("jwt");
+        const isLocal = process.env.NODE_ENV === "development";
+        res.clearCookie("jwt", {
+            httpOnly: true,
+            secure: !isLocal,
+            sameSite: isLocal ? "lax" : "none",
+        });
         res.status(200).json({ message: "User Logged out Successfully" });
     } catch (error) {
         console.log(error);
