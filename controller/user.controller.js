@@ -55,8 +55,6 @@ const login = async (req, res) => {
             ? forwardedFor.split(",")[0].trim()
             : req.ip;
 
-        console.log(`${email}: ${ip}`);
-
         if (!user) {
             return res.status(400).json({
                 error: "Invalid Email or Password"
@@ -73,6 +71,10 @@ const login = async (req, res) => {
                 error: "Invalid Email or Password"
             });
         }
+
+        user.lastLoginIp = ip;
+        user.lastLoginAt = new Date();
+        await user.save();
 
         createTokenAndSaveCookie(user._id, res);
 
