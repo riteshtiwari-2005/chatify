@@ -20,7 +20,7 @@ const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:3001"
 ];
-
+app.set("trust proxy", 1);
 // Express CORS configuration
 app.use(
   cors({

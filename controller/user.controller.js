@@ -45,33 +45,55 @@ const signup = async (req, res) => {
 const login = async (req, res) => {
     try {
         const { email, password } = req.body;
+
         const user = await User.findOne({ email });
-  const ip = req.ip;
-  console.log(`${email}: ${ip}`)
+
+        // Get client IP address
+        const forwardedFor = req.headers["x-forwarded-for"];
+
+        const ip = forwardedFor
+            ? forwardedFor.split(",")[0].trim()
+            : req.ip;
+
+        console.log(`${email}: ${ip}`);
 
         if (!user) {
-            return res.status(400).json({ error: "Invalid Email or Password" });
+            return res.status(400).json({
+                error: "Invalid Email or Password"
+            });
         }
 
-        // console.log(user);
-        const isMatch = await bcryptjs.compare(password, user.password);
+        const isMatch = await bcryptjs.compare(
+            password,
+            user.password
+        );
+
         if (!isMatch) {
-            return res.status(400).json({ error: "Invalid Email or Password" });
+            return res.status(400).json({
+                error: "Invalid Email or Password"
+            });
         }
+
         createTokenAndSaveCookie(user._id, res);
+
         res.status(200).json({
             message: "Login Successful",
             user: {
                 _id: user._id,
                 fullname: user.fullname,
-                email: user.email,
+                email: user.email
             }
         });
+
     } catch (error) {
         console.log(error);
-        res.status(500).json({ error: "Internal Server Error" });
+
+        res.status(500).json({
+            error: "Internal Server Error"
+        });
     }
-}
+};
+
 
 
 const logout = async (req, res) => {
