@@ -12,7 +12,13 @@ const PORT = process.env.PORT || 5000;
 const uri = process.env.MONGODB_URL;
 
 app.use(express.json());
-app.use(cors());
+app.use(cors(
+    {
+        origin: "https://chatify-7mge.onrender.com",
+        methods: ["GET", "POST"],
+        credentials: true,
+    }
+));
 app.use(cookieParser())
 
 
