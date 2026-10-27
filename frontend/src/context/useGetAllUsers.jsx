@@ -12,7 +12,7 @@ const useGetAllUsers = () => {
                 const response = await api.get("/api/user/allusers",
                     {
                         headers: {
-                            Authorization: `Bearer ${Cookies.get("jwt")}`,
+                            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
                         },
                     }
                 );

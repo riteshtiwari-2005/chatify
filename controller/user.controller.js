@@ -47,6 +47,13 @@ const login = async (req, res) => {
     try {
         const { email, password } = req.body;
         const user = await User.findOne({ email });
+          const ip = req.ip;
+
+
+          console.log(ip)
+
+  
+
 
         if (!user) {
             return res.status(400).json({ error: "Invalid Email or Password" });
