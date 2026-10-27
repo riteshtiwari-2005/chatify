@@ -20,15 +20,15 @@ app.use("/api/user", userRoute);
 app.use("/api/message", messageRoute);
 
 //---------code for deployment--------------
-// if(process.env.NODE_ENV === "production") {
-//     const dirPath = path.resolve();
+if(process.env.NODE_ENV === "production") {
+    const dirPath = path.resolve();
 
 
-//     app.use(express.static("./frontend/dist"));
-//     app.get("*", (req, res) => {
-//         res.sendFile(path.resolve(dirPath, "./frontend/dist", "index.html"));
-//     })
-// }
+    app.use(express.static("./frontend/dist"));
+    app.get("*", (req, res) => {
+        res.sendFile(path.resolve(dirPath, "./frontend/dist", "index.html"));
+    })
+}
 
 const start = async () => {
     try {
