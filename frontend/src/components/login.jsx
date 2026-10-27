@@ -3,7 +3,7 @@ import { FaKey } from 'react-icons/fa'
 import { IoMdMail } from 'react-icons/io'
 import { Link } from 'react-router-dom'
 import { useForm } from "react-hook-form"
-import axios from "axios";
+import api from '../axios.js'
 import { useAuth } from '../context/AuthProvider'
 import toast from "react-hot-toast";
 
@@ -26,7 +26,7 @@ const Login = () => {
         };
 
         try {
-            const response = await axios.post("/api/user/login", userInfo);
+            const response = await api.post("/api/user/login", userInfo);
             if (response.data) {
                 reset();
                 toast.success("Login Successful");

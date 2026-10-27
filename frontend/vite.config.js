@@ -12,6 +12,11 @@ export default defineConfig({
         changeOrigin: true,
         secure: true,
       },
+      '/socket.io': {
+        target: 'https://chatify-7mge.onrender.com',
+        changeOrigin: true,
+        ws: true,
+      },
     },
   },
 })

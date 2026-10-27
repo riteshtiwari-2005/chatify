@@ -4,9 +4,9 @@ import { IoMdMail } from "react-icons/io";
 import { FaKey } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import { useForm } from "react-hook-form"
-import axios from "axios";
 import { useAuth } from '../context/AuthProvider';
 import toast from "react-hot-toast";
+import api from '../axios';
 
 const Signup = () => {
 
@@ -38,7 +38,7 @@ const Signup = () => {
         };
 
         try {
-            const response = await axios.post("/api/user/signup", userInfo);
+            const response = await api.post("/api/user/signup", userInfo);
             if (response.data) {
                 reset();
                 toast.success("Signup Successful");

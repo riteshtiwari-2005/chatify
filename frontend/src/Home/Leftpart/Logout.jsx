@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { BiLogOutCircle } from "react-icons/bi";
-import axios from "axios";
 import Cookies from "js-cookie";
 import toast from "react-hot-toast";
+import api from "../../axios";
 
 const Logout = () => {
 
@@ -11,7 +11,7 @@ const Logout = () => {
     const handleLogout = async () => {
         setLoading(true);
         try {
-            const response = await axios.post("/api/user/logout");
+            const response = await api.post("/api/user/logout");
             localStorage.removeItem("ChatApp");
             Cookies.remove("jwt");
             setLoading(false);

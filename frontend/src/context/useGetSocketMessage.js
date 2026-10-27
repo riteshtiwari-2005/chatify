@@ -1,22 +1,31 @@
+
 import { useEffect } from 'react';
 import { useSocketContext } from './SocketContext';
 import useConversation from '../zustand/useConversation';
-import sound from "../../../frontend/public/assets/a-chat-notification.wav";
 
 const useGetSocketMessage = () => {
     const { socket } = useSocketContext();
     const { messages, setMessage } = useConversation();
 
     useEffect(() => {
+        if (!socket) return;
 
-        socket.on('newMessage', (newMessage) => {
-            const notification = new Audio(sound);
-            notification.play()
+        const handleNewMessage = (newMessage) => {
+            const notification = new Audio(
+                '/assets/a-chat-notification.wav'
+            );
+
+            notification.play().catch((error) => {
+                console.log('Notification sound could not play:', error);
+            });
+
             setMessage([...messages, newMessage]);
-        });
+        };
+
+        socket.on('newMessage', handleNewMessage);
 
         return () => {
-            socket.off('newMessage');
+            socket.off('newMessage', handleNewMessage);
         };
     }, [socket, messages, setMessage]);
 };
