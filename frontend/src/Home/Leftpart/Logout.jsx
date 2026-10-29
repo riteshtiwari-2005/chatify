@@ -27,10 +27,9 @@ const Logout = () => {
     }
 
     return (
-        <div className="h-[10vh]">
-            <hr />
+        <div className="border-t border-slate-200 bg-white p-3">
             <div>
-                <BiLogOutCircle onClick={handleLogout} className="text-5xl text-white hover:bg-slate-700 duration-300 cursor-pointer rounded-full p-2 m-3" />
+                <BiLogOutCircle onClick={handleLogout} className="m-2 cursor-pointer rounded-full p-2 text-4xl text-slate-500 duration-300 hover:bg-slate-100 hover:text-[#6c63ff]" />
             </div>
         </div>
     )

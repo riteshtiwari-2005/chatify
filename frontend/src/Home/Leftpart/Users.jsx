@@ -9,8 +9,8 @@ const Users = () => {
 
     return (
         <div className="">
-            <h1 className="border-b border-slate-100 bg-white px-6 py-3 font-semibold text-slate-700">Chats</h1>
-            <div className="py-2 flex-1 overflow-y-auto" style={{ maxHeight: "calc(83vh - 10vh)" }}>
+            <h1 className="border-b border-slate-100 bg-white px-7 py-5 text-lg font-bold text-[#334155]">Chats</h1>
+            <div className="flex-1 overflow-y-auto" style={{ maxHeight: "calc(83vh - 10vh)" }}>
                 {allUsers.map((user, index) => (
                     <User key={index} user={user} />
                 ))}

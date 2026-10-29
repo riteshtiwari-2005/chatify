@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { FaSadCry, FaSearch } from "react-icons/fa";
+import { FaSearch } from "react-icons/fa";
 import useGetAllUsers from "../../context/useGetAllUsers";
 import useConversation from "../../zustand/useConversation";
 import toast from "react-hot-toast";
@@ -24,16 +24,14 @@ const Search = () => {
     }
 
     return (
-        <div className="h-[10vh]">
-            <div className="px-6 py-4">
+        <div className="border-b border-slate-100 bg-white">
+            <div className="px-6 pb-5 pt-6">
                 <form onSubmit={handleSubmit}>
-                    <div className="flex space-x-3">
-                        <label className="input input-border border border-gray-700 bg-slate-900 rounded-lg flex items-center gap-2 w-[80%]">
-                            <input value={search} onChange={(e) => setSearch(e.target.value)} type="text" className="outline-none p-2 text-lg grow bg-slate-900 font-semibold" placeholder="Search" />
+                    <div className="flex items-center">
+                        <label className="flex h-14 w-full items-center gap-3 rounded-xl bg-[#dedcff] px-4 transition focus-within:bg-[#d5d2ff]">
+                            <FaSearch className="text-xl text-[#334155]" />
+                            <input value={search} onChange={(e) => setSearch(e.target.value)} type="text" className="w-full bg-transparent text-base font-medium text-[#334155] outline-none placeholder:text-[#475569]" placeholder="Search" />
                         </label>
-                        <button>
-                            <FaSearch className="text-5xl p-2 hover:bg-gray-600 rounded-2xl duration-300" />
-                        </button>
                     </div>
                 </form>
             </div>

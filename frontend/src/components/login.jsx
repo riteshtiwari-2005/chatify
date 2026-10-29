@@ -43,28 +43,37 @@ const Login = () => {
 
     return (
         <>
-            <div className="h-screen flex justify-center items-center bg-slate-900 text-white">
-                <form onSubmit={handleSubmit(onSubmit)} className="border border-white rounded-3xl px-6 py-6 w-80 md:w-96 flex flex-col justify-between space-y-6 shadow-lg shadow-green-500">
-                    <div className="flex justify-between items-center">
-                        <img src="/assets/logo.avif" className="w-12 rounded-full border border-x-4 border-y-4 border-red-500" alt="logo" />
-                        <h1 className="text-3xl mx-auto bg-black px-3 py-2 rounded-xl"><span className="font-semibold bg-gradient-to-r from-red-500 via-blue-500 to-red-500 text-transparent bg-clip-text">A-Chat</span></h1>
+            <div className="auth-page flex min-h-screen items-center justify-center px-4 py-8 text-slate-800">
+                <form onSubmit={handleSubmit(onSubmit)} className="auth-card w-full max-w-md rounded-[28px] bg-white p-7 shadow-2xl shadow-indigo-200/60 sm:p-10">
+                    <div className="mb-9 flex items-center gap-3">
+                        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#151515] p-2 shadow-lg">
+                            <img src="/assets/logo.avif" className="h-full w-full rounded-xl object-cover" alt="A-Chat logo" />
+                        </div>
+                        <div>
+                            <h1 className="text-2xl font-bold tracking-tight text-slate-900">A-Chat</h1>
+                            <p className="text-xs font-medium text-slate-400">Connect. Share. Belong.</p>
+                        </div>
                     </div>
-                    <h2 className="font-semibold px-2 py-2 text-2xl text-start font-mono bg-gradient-to-r from-blue-500 via-red-500 to-red-500 text-transparent bg-clip-text">Login</h2>
+                    <div className="mb-7">
+                        <p className="mb-2 text-sm font-semibold text-[#6c63ff]">Welcome back</p>
+                        <h2 className="text-3xl font-bold tracking-tight text-slate-900">Sign in to chat</h2>
+                        <p className="mt-2 text-sm text-slate-400">Continue your conversations with friends.</p>
+                    </div>
                     <div className="space-y-4">
-                        <label className="flex items-center gap-2">
-                            <IoMdMail className="absolute ml-3 text-lg" />
-                            <input {...register("email", { required: true })} type="email" className="w-full border px-9 py-3 rounded-lg text-slate-900 bg-white" placeholder="Email" />
+                        <label className="auth-field flex items-center gap-3">
+                            <IoMdMail className="text-lg text-[#6c63ff]" />
+                            <input {...register("email", { required: true })} type="email" className="w-full bg-transparent text-sm text-slate-800 outline-none placeholder:text-slate-400" placeholder="Email address" />
                         </label>
-                        {errors.email && <span className="text-red-500 text-[12px] font-semibold">*Email is required</span>}
-                        <label className="flex items-center gap-2">
-                            <FaKey className="absolute ml-3 text-sm" />
-                            <input {...register("password", { required: true })} type="password" className="w-full border px-9 py-3 rounded-lg text-slate-900 bg-white" placeholder="Password" />
+                        {errors.email && <span className="text-xs font-semibold text-rose-500">Email is required</span>}
+                        <label className="auth-field flex items-center gap-3">
+                            <FaKey className="text-sm text-[#6c63ff]" />
+                            <input {...register("password", { required: true })} type="password" className="w-full bg-transparent text-sm text-slate-800 outline-none placeholder:text-slate-400" placeholder="Password" />
                         </label>
-                        {errors.password && <span className="text-red-500 text-[12px] font-semibold">*Password is required</span>}
+                        {errors.password && <span className="text-xs font-semibold text-rose-500">Password is required</span>}
                     </div>
-                    <div className="justify-between space-y-5">
-                        <input type="submit" value="Login" className="bg-gradient-to-r from-blue-500 to-red-500 px-3 py-2 rounded-lg cursor-pointer  shadow-lg shadow-slate-600 hover:shadow-green-500" />
-                        <p className="self-center">New to <span className="bg-black rounded-md px-2 py-1"><span className="font-mono font-bold  md:text-lg bg-gradient-to-r from-red-500 via-blue-500 to-red-500 text-transparent bg-clip-text">A-Chat?</span></span><Link to="/signup" className="text-blue-400">{"  "}Signup</Link></p>
+                    <div className="mt-7 space-y-5">
+                        <input type="submit" value="Sign in" className="w-full cursor-pointer rounded-xl bg-[#6c63ff] px-4 py-3.5 text-sm font-semibold text-white shadow-lg shadow-indigo-200 transition hover:bg-[#574ee8]" />
+                        <p className="text-center text-sm text-slate-400">New to A-Chat? <Link to="/signup" className="font-semibold text-[#6c63ff] hover:underline">Create an account</Link></p>
                     </div>
                 </form>
             </div>

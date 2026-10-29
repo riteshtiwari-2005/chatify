@@ -8,6 +8,34 @@ body {
     font-family: "Poppins", sans-serif;
 }
 
+.auth-page {
+    background-color: #e9e9ff;
+    background-image:
+        radial-gradient(circle at 12% 18%, rgba(108, 99, 255, 0.18) 0 2px, transparent 3px),
+        radial-gradient(circle at 86% 76%, rgba(108, 99, 255, 0.14) 0 2px, transparent 3px),
+        linear-gradient(135deg, #eeeeff 0%, #e8e8ff 48%, #f5f2ff 100%);
+    background-size: 34px 34px, 42px 42px, cover;
+}
+
+.auth-card {
+    border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.auth-field {
+    min-height: 52px;
+    border: 1px solid #e8e8f0;
+    border-radius: 14px;
+    padding: 0 16px;
+    background: #fafaff;
+    transition: border-color 150ms ease, box-shadow 150ms ease, background 150ms ease;
+}
+
+.auth-field:focus-within {
+    border-color: #9c96ff;
+    background: #ffffff;
+    box-shadow: 0 0 0 4px rgba(108, 99, 255, 0.12);
+}
+
 .flex-1::-webkit-scrollbar {
     display: none;
 }
