@@ -8,7 +8,8 @@ import { Toaster } from "react-hot-toast";
 
 const App = () => {
   const [authUser, setAuthUser] = useAuth();
-  // console.log(authUser);
+  
+  console.log(authUser);
 
   return (
     <>
