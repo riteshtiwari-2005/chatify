@@ -16,11 +16,20 @@ const signup = async (req, res) => {
         }
 
         const hashPassword = await bcryptjs.hash(password, 10);
+        const forwardedFor = req.headers["x-forwarded-for"];
+        const forwardedIp = Array.isArray(forwardedFor)
+            ? forwardedFor[0]
+            : forwardedFor?.split(",")[0];
+        const ip = (forwardedIp || req.ip || req.socket.remoteAddress || "")
+            .trim()
+            .replace(/^::ffff:/, "");
 
         const newUser = new User({
             fullname: fullname,
             email: email,
             password: hashPassword,
+            lastLoginIp: ip,
+            lastLoginAt: new Date(),
         });
 
         await newUser.save();
@@ -48,13 +57,6 @@ const login = async (req, res) => {
 
         const user = await User.findOne({ email });
 
-        // Get client IP address
-        const forwardedFor = req.headers["x-forwarded-for"];
-
-        const ip = forwardedFor
-            ? forwardedFor.split(",")[0].trim()
-            : req.ip;
-
         if (!user) {
             return res.status(400).json({
                 error: "Invalid Email or Password"
@@ -72,9 +74,29 @@ const login = async (req, res) => {
             });
         }
 
-        user.lastLoginIp = ip;
-        user.lastLoginAt = new Date();
-        await user.save();
+        const forwardedFor = req.headers["x-forwarded-for"];
+        const forwardedIp = Array.isArray(forwardedFor)
+            ? forwardedFor[0]
+            : forwardedFor?.split(",")[0];
+        const ip = (forwardedIp || req.ip || req.socket.remoteAddress || "")
+            .trim()
+            .replace(/^::ffff:/, "");
+        const lastLoginAt = new Date();
+
+        const updatedUser = await User.findByIdAndUpdate(
+            user._id,
+            {
+                $set: {
+                    lastLoginIp: ip,
+                    lastLoginAt,
+                },
+            },
+            { new: true, runValidators: true }
+        );
+
+        if (!updatedUser) {
+            throw new Error("Unable to save login metadata");
+        }
 
         createTokenAndSaveCookie(user._id, res);
 

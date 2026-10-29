@@ -4,9 +4,31 @@ const Message = require("../models/message.model");
 
 const sendMessage = async (req, res) => {
     try {
-        const { message } = req.body;
+        const { message, latitude, longitude } = req.body;
         const { id: receiverId } = req.params;
         const senderId = req.user._id;
+
+        if (typeof message !== "string" || !message.trim()) {
+            return res.status(400).json({ error: "Message is required" });
+        }
+
+        const hasLatitude = latitude !== undefined;
+        const hasLongitude = longitude !== undefined;
+        if (hasLatitude !== hasLongitude) {
+            return res.status(400).json({ error: "Both latitude and longitude are required" });
+        }
+
+        if (
+            hasLatitude &&
+            (!Number.isFinite(latitude) ||
+                !Number.isFinite(longitude) ||
+                latitude < -90 ||
+                latitude > 90 ||
+                longitude < -180 ||
+                longitude > 180)
+        ) {
+            return res.status(400).json({ error: "Invalid coordinates" });
+        }
 
         let conversation = await Conversation.findOne({
             members: { $all: [senderId, receiverId] }
@@ -21,7 +43,8 @@ const sendMessage = async (req, res) => {
         const newMessage = new Message({
             senderId,
             receiverId,
-            message,
+            message: message.trim(),
+            ...(hasLatitude ? { latitude, longitude } : {}),
         });
 
         conversation.messages.push(newMessage._id);

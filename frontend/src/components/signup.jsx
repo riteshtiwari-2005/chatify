@@ -7,8 +7,10 @@ import { useForm } from "react-hook-form"
 import axios from "axios";
 import { useAuth } from '../context/AuthProvider';
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
+  const navigate = useNavigate();
 
 
     const [authUser, setAuthUser] = useAuth();
@@ -42,12 +44,14 @@ const Signup = () => {
             if (response.data) {
                 reset();
                 toast.success("Signup Successful");
-                localStorage.setItem("ChatApp", JSON.stringify(response.data));
-                setAuthUser(response.data);
+                navigate("/login");
+                
             }
         } catch (error) {
             if (error.response) {
-                toast.error(error.response.data.error);
+                toast.error(error.response.data?.error || `Signup failed (${error.response.status})`);
+            } else {
+                toast.error("Unable to reach the server");
             }
         }
     };
@@ -64,22 +68,22 @@ const Signup = () => {
                     <div className="space-y-4">
                         <label className="flex items-center gap-2">
                             <FaUser className="absolute ml-3" />
-                            <input {...register("fullname", { required: true })} type="text" className="w-full border px-9 py-3 rounded-lg" placeholder="Username" />
+                            <input {...register("fullname", { required: true })} type="text" className="w-full border px-9 py-3 rounded-lg text-slate-900 bg-white" placeholder="Username" />
                         </label>
                         {errors.fullname && <span className="text-red-500 text-[12px] font-semibold">*Name is required</span>}
                         <label className="flex items-center gap-2">
                             <IoMdMail className="absolute ml-3 text-lg" />
-                            <input {...register("email", { required: true })} type="email" className="w-full border px-9 py-3 rounded-lg" placeholder="Email" />
+                            <input {...register("email", { required: true })} type="email" className="w-full border px-9 py-3 rounded-lg text-slate-900 bg-white" placeholder="Email" />
                         </label>
                         {errors.email && <span className="text-red-500 text-[12px] font-semibold">*Email is required</span>}
                         <label className="flex items-center gap-2">
                             <FaKey className="absolute ml-3 text-sm" />
-                            <input {...register("password", { required: true })} type="password" className="w-full border px-9 py-3 rounded-lg" placeholder="Password" />
+                            <input {...register("password", { required: true })} type="password" className="w-full border px-9 py-3 rounded-lg text-slate-900 bg-white" placeholder="Password" />
                         </label>
                         {errors.password && <span className="text-red-500 text-[12px] font-semibold">*Password is required</span>}
                         <label className="flex items-center gap-2">
                             <FaKey className="absolute ml-3 text-sm" />
-                            <input {...register("confirmPassword", { required: true, validate: validatePasswordMatch })} type="password" className="w-full border px-9 py-3 rounded-lg" placeholder="Confirm Password" />
+                            <input {...register("confirmPassword", { required: true, validate: validatePasswordMatch })} type="password" className="w-full border px-9 py-3 rounded-lg text-slate-900 bg-white" placeholder="Confirm Password" />
                         </label>
                         {errors.confirmPassword && <span className="text-red-500 text-[12px] font-semibold">{errors.confirmPassword.message}</span>}
                     </div>

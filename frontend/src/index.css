@@ -18,3 +18,9 @@ body {
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
+
+.bg-chat-pattern {
+    background-color: #efeae2;
+    background-image: radial-gradient(rgba(90, 90, 90, 0.08) 1px, transparent 1px);
+    background-size: 18px 18px;
+}

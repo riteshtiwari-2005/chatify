@@ -11,16 +11,16 @@ const User = ({ user }) => {
     const isOnline = onlineUsers.includes(user._id);
 
     return (
-        <div className={`hover:bg-slate-600 duration-300 ${isSelected ? "bg-gray-400 text-black" : ""}`} onClick={() => setSelectedConversation(user)}>
-            <div className="flex space-x-4 px-6 py-3 hover:bg-slate-500 hover:text-black cursor-pointer">
+        <div className={`duration-300 ${isSelected ? "bg-[#e9edef]" : "hover:bg-[#f5f6f6]"}`} onClick={() => setSelectedConversation(user)}>
+            <div className="flex cursor-pointer space-x-3 border-b border-slate-100 px-5 py-3">
                 <div className={`avatar ${isOnline? "online" : ""}`}>
                     <div className="w-12 rounded-full">
                         <img src="/assets/logo.avif" />
                     </div>
                 </div>
-                <div>
-                    <h1 className="font-bold">{user.fullname}</h1>
-                    <span>{user.email}</span>
+                <div className="min-w-0">
+                    <h1 className="truncate font-semibold text-slate-700">{user.fullname}</h1>
+                    <span className="block truncate text-xs text-slate-500">{user.email}</span>
                 </div>
             </div>
         </div>

@@ -1,27 +1,27 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { BiLogOutCircle } from "react-icons/bi";
 import axios from "axios";
 import Cookies from "js-cookie";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthProvider";
 
 const Logout = () => {
 
-    const [loading, setLoading] = useState(false);
+    const [, setAuthUser] = useAuth();
+    const navigate = useNavigate();
 
     const handleLogout = async () => {
-        setLoading(true);
         try {
-            const response = await axios.post("/api/user/logout");
+            await axios.post("/api/user/logout");
             localStorage.removeItem("ChatApp");
             Cookies.remove("jwt");
-            setLoading(false);
+            setAuthUser(undefined);
             toast.success("Logout successfull!!");
-            setTimeout(() => {
-                window.location.reload();
-            }, 1000);
+            navigate("/login", { replace: true });
         } catch (error) {
             console.log(error);
-            toast.error(error.response.data.error);
+            toast.error(error.response?.data?.error || "Logout failed");
         }
 
     }

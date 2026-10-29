@@ -13,22 +13,22 @@ const Chatuser = () => {
 
   return (
     <>
-      <div className="relative flex items-center h-[8%] justify-center gap-4 bg-slate-800 duration-300">
+      <div className="relative flex h-[9vh] items-center gap-3 border-b border-[#d1d7db] bg-[#f0f2f5] px-4 shadow-sm duration-300">
         <label
           htmlFor="my-drawer-2"
-          className="btn btn-ghost drawer-button lg:hidden absolute left-5"
+          className="btn btn-ghost drawer-button absolute left-1 lg:hidden"
         >
           <CiMenuFries className="text-white text-xl" />
         </label>
-        <div className="flex space-x-3 justify-center items-center h-[9vh] py-2 bg-gray-800">
+        <div className="ml-8 flex items-center gap-3 py-2">
           <div className={`avatar ${getOnlineUsersStatus(selectedConversation._id) === "Online" ? "online" : "offline"}`}>
-            <div className="w-12 rounded-full">
+            <div className="w-11 rounded-full ring-2 ring-white">
               <img src="/assets/logo.avif" alt="" />
             </div>
           </div>
           <div>
-            <h1 className="text-xl font-bold bg-gradient-to-r from-orange-600 via-white to-green-500 text-transparent bg-clip-text">{selectedConversation ? selectedConversation.fullname : "K AMITH"}</h1>
-            <span className={`text-sm ${getOnlineUsersStatus(selectedConversation._id) === "Online" ? "text-green-500" : "text-red-500"} font-semibold font-mono`}>{getOnlineUsersStatus(selectedConversation._id)}</span>
+            <h1 className="font-semibold text-slate-800">{selectedConversation ? selectedConversation.fullname : "K AMITH"}</h1>
+            <span className={`text-xs ${getOnlineUsersStatus(selectedConversation._id) === "Online" ? "text-[#128c7e]" : "text-slate-500"}`}>{getOnlineUsersStatus(selectedConversation._id)}</span>
           </div>
         </div>
       </div>

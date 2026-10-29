@@ -10,7 +10,7 @@ const Home = () => {
                 type="checkbox"
                 className="drawer-toggle"
             />
-            <div className="drawer-content flex flex-col items-center justify-center">
+            <div className="drawer-content min-h-screen bg-[#d7e5df]">
                 <Right />
             </div>
             <div className="drawer-side">
@@ -19,7 +19,7 @@ const Home = () => {
                     aria-label="close sidebar"
                     className="drawer-overlay"
                 ></label>
-                <ul className="menu w-80 min-h-full bg-black text-base-content">
+                <ul className="menu w-80 min-h-full border-r border-slate-200 bg-white p-0 text-base-content shadow-xl">
                     <Left />
                 </ul>
             </div>
