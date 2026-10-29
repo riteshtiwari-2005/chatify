@@ -52,8 +52,14 @@ const sendMessage = async (req, res) => {
         await Promise.all([conversation.save(), newMessage.save()]);
 
         const receiverSocketId = getReceiverSocketId(receiverId);
+        const senderSocketId = getReceiverSocketId(senderId); // Get sender's socket ID as well
+
         if (receiverSocketId) {
             io.to(receiverSocketId).emit("newMessage", newMessage);
+        }
+
+        if (senderSocketId) {
+            io.to(senderSocketId).emit("newMessage", newMessage); // Emit to sender as well
         }
 
         res.status(200).json(newMessage);

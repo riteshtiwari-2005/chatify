@@ -2,25 +2,15 @@
 import { useEffect } from 'react';
 import { useSocketContext } from './SocketContext';
 import useConversation from '../zustand/useConversation';
-import { useAuth } from './AuthProvider';
 
 const useGetSocketMessage = () => {
     const { socket } = useSocketContext();
-    const { selectedConversation, addMessage } = useConversation();
-    const [authUser] = useAuth();
+    const { messages, setMessage } = useConversation();
 
     useEffect(() => {
-        if (!socket || !selectedConversation || !authUser?.user?._id) return;
+        if (!socket) return;
 
         const handleNewMessage = (newMessage) => {
-            const isCurrentConversation =
-                newMessage.senderId === selectedConversation._id ||
-                newMessage.receiverId === selectedConversation._id;
-
-            if (!isCurrentConversation || newMessage.receiverId !== authUser.user._id) {
-                return;
-            }
-
             const notification = new Audio(
                 '/assets/a-chat-notification.wav'
             );
@@ -29,7 +19,7 @@ const useGetSocketMessage = () => {
                 console.log('Notification sound could not play:', error);
             });
 
-            addMessage(newMessage);
+            setMessage([...messages, newMessage]);
         };
 
         socket.on('newMessage', handleNewMessage);
@@ -37,7 +27,7 @@ const useGetSocketMessage = () => {
         return () => {
             socket.off('newMessage', handleNewMessage);
         };
-    }, [socket, selectedConversation, authUser, addMessage]);
+    }, [socket, messages, setMessage]);
 };
 
 export default useGetSocketMessage;
